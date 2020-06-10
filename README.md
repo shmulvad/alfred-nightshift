@@ -8,9 +8,10 @@ A simple [Alfred 4][1] workflow for quickly turning on/off NightShift or setting
 ## Usage
 In Alfred, type `night` followed by either `off`, `on` or a number between `0 - 100`.
 
-![night general](images/night.png?raw=true "")
-![night number](images/night85.png?raw=true "")
-
+<p align="center">
+  <img width="1200" height="auto" src="images/night.png?raw=true">
+  <img width="1200" height="auto" src="images/night85.png?raw=true">
+</p>
 
 
 ## Credits
@@ -20,6 +21,6 @@ The workflow makes use of the following:
 * [OneUpdater][4] by vitorgalvao for handling automatic updates.
 
 [1]: https://www.alfredapp.com/
-[2]: https://github.com/shmulvad/alfred-nightshift/releases/latest
+[2]: https://github.com/shmulvad/alfred-nightshift/releases/latest/download/NightShift.alfredworkflow
 [3]: https://github.com/leberwurstsaft/nshift
 [4]: https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater
