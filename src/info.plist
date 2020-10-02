@@ -134,7 +134,7 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Please wait</string>
+				<string>Please wait...</string>
 				<key>script</key>
 				<string>strength="{query}"
 
@@ -144,14 +144,14 @@ strength_normalized=$strength
 extra_text=""
 if [[ "$strength" -ge 101 ]]
     then
-        strength_normalized=100
-        extra_text=" (max)"
+        $strength_normalized=100
+        $extra_text=" (max)"
 fi
 
 if [[ "$strength" -lt 0 ]]
     then
-        strength_normalized=0
-        extra_text=" (min)"
+        $strength_normalized=0
+        $extra_text=" (min)"
 fi
 
 
@@ -184,6 +184,8 @@ echo "{\"items\": [{\"title\": \"$TITLE\", \"subtitle\": \"$SUBTITLE\", \"arg\":
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>strength</key>
@@ -317,7 +319,12 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>./nshift $strength</string>
+				<string># Make sure scary warning about maybe being malicious software does not pop up
+chmod +x ./nshift
+xattr -d com.apple.quarantine ./nshift
+
+# Actually change NightShift strength
+./nshift $strength</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -337,6 +344,8 @@ fi</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>strength</key>
@@ -376,6 +385,8 @@ fi</string>
 			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>strength</key>
@@ -459,7 +470,7 @@ Uses nshift: https://github.com/leberwurstsaft/nshift</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>webaddress</key>
 	<string>www.shmulvad.com</string>
 </dict>
