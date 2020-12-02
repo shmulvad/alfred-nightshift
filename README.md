@@ -1,5 +1,13 @@
 # Alfred NightShift
-A simple [Alfred 4][1] workflow for quickly turning on/off NightShift or setting it to a value between 0-100. No more fiddling with deep settings when you either want to save your eyes or need to work with accurate colors!
+
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/shmulvad/alfred-nightshift?sort=semver&style=flat-square)](https://github.com/shmulvad/alfred-nightshift/releases)
+![GitHub downloads](https://img.shields.io/github/downloads/shmulvad/alfred-nightshift/total?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/shmulvad/alfred-nightshift?style=flat-square)](https://github.com/shmulvad/alfred-nightshift/issues)
+[![GitHub license](https://img.shields.io/github/license/shmulvad/alfred-nightshift?style=flat-square)](https://github.com/shmulvad/alfred-nightshift/blob/master/LICENSE)
+
+A simple [Alfred][1] workflow for quickly turning on/off NightShift or setting it to a value between 0-100. No more fiddling with deep settings when you either want to save your eyes or need to work with accurate colors!
+
+⭐ If you find this repo useful, please consider starring it to let me know.
 
 ## Installation
 1. Install [alfred-nightshift][2] workflow.
