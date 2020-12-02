@@ -1,7 +1,7 @@
 # Alfred NightShift
 
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/shmulvad/alfred-nightshift?sort=semver&style=flat-square)](https://github.com/shmulvad/alfred-nightshift/releases)
-![GitHub downloads](https://img.shields.io/github/downloads/shmulvad/alfred-nightshift/total?style=flat-square)
+[![GitHub downloads](https://img.shields.io/github/downloads/shmulvad/alfred-nightshift/total?style=flat-square)](https://github.com/shmulvad/alfred-nightshift/releases/latest/download/NightShift.alfredworkflow)
 [![GitHub issues](https://img.shields.io/github/issues/shmulvad/alfred-nightshift?style=flat-square)](https://github.com/shmulvad/alfred-nightshift/issues)
 [![GitHub license](https://img.shields.io/github/license/shmulvad/alfred-nightshift?style=flat-square)](https://github.com/shmulvad/alfred-nightshift/blob/master/LICENSE)
 
