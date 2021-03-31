@@ -23,7 +23,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>1856BA1E-8C67-4836-B011-01016F82716C</string>
+				<string>8EFAE90E-D848-4B09-A515-58640594F92E</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -32,11 +32,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>66E147FF-EF1E-42BB-8F75-27C616797C58</key>
+		<key>8EFAE90E-D848-4B09-A515-58640594F92E</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>8FD18644-7D42-48EB-B4C1-5C70FF96403D</string>
+				<string>197AE1CD-8228-4A3B-9079-EDC2445102ED</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -58,11 +58,37 @@
 				<false/>
 			</dict>
 		</array>
-		<key>B5EFA88D-8D1E-4731-918D-D0F770391E62</key>
+		<key>9B53390E-04D4-47CC-873E-7324D569372E</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>1856BA1E-8C67-4836-B011-01016F82716C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>BA6F50E3-1A81-4138-A8FE-683D00A8A2E0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8FD18644-7D42-48EB-B4C1-5C70FF96403D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C3FF67E9-59C2-46F9-BB90-003A0EBE328E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9B53390E-04D4-47CC-873E-7324D569372E</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -84,30 +110,46 @@
 				<false/>
 			</dict>
 		</array>
-		<key>ED209951-E811-4690-8562-D15480B080BE</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>B5EFA88D-8D1E-4731-918D-D0F770391E62</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Søren Mulvad</string>
 	<key>description</key>
-	<string>Toggle Night Shift on/off or change warm strength</string>
+	<string>Toggle Night Shift on/off or change color temperature</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
 	<string>NightShift</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># Make sure scary warning about maybe being malicious software does not pop up
+chmod +x ./nightlight
+xattr -d com.apple.quarantine ./nightlight
+
+# Actually change NightShift strength
+./nightlight temp $strength
+./nightlight on</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8EFAE90E-D848-4B09-A515-58640594F92E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -140,33 +182,41 @@
 
 ! [[ "$strength" =~ ^-?[0-9]+$ ]] &amp;&amp; exit
 
+current_temp=$(./nightlight temp)
+full_status=$(./nightlight status)
+status=${full_status%% *}
+
 strength_normalized=$strength
 extra_text=""
-if [[ "$strength" -ge 101 ]]
+if [[ "$strength" -ge 100 ]]
     then
-        $strength_normalized=100
-        $extra_text=" (max)"
+        strength_normalized=100
+        extra_text=" (max)"
 fi
 
-if [[ "$strength" -lt 0 ]]
+if [[ "$strength" -le 0 ]]
     then
-        $strength_normalized=0
-        $extra_text=" (min)"
+        strength_normalized=0
+        extra_text=" (min)"
 fi
 
+if [[ "$status" == "off" ]]
+    then
+        current_temp="0"
+fi
 
-TITLE="Set Night Shift strength to $strength_normalized$extra_text"
-SUBTITLE="Set warm strength to $strength_normalized$extra_text"
+title="Set color temperature to $strength_normalized"
+subtitle="Change value from $current_temp to $strength_normalized$extra_text"
 
-echo "{\"items\": [{\"title\": \"$TITLE\", \"subtitle\": \"$SUBTITLE\", \"arg\": \"$strength_normalized\", \"valid\": true}]}"</string>
+echo "{\"items\": [{\"title\": \"$title\", \"subtitle\": \"$subtitle\", \"arg\": \"$strength_normalized\", \"valid\": true}]}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Set warm strength to {query}</string>
+				<string>Change strength of warm color spectrum</string>
 				<key>title</key>
-				<string>Set Night Shift strength to {query}</string>
+				<string>Set color temperature to {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -298,7 +348,7 @@ fi</string>
 				<key>keyword</key>
 				<string>night off</string>
 				<key>subtext</key>
-				<string>Turns Night Shift off</string>
+				<string>Disable warm color spectrum</string>
 				<key>text</key>
 				<string>Turn Night Shift off</string>
 				<key>withspace</key>
@@ -307,7 +357,27 @@ fi</string>
 			<key>type</key>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
-			<string>66E147FF-EF1E-42BB-8F75-27C616797C58</string>
+			<string>C3FF67E9-59C2-46F9-BB90-003A0EBE328E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>passthroughargument</key>
+				<false/>
+				<key>variables</key>
+				<dict>
+					<key>args</key>
+					<string>off</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>9B53390E-04D4-47CC-873E-7324D569372E</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -320,11 +390,11 @@ fi</string>
 				<integer>102</integer>
 				<key>script</key>
 				<string># Make sure scary warning about maybe being malicious software does not pop up
-chmod +x ./nshift
-xattr -d com.apple.quarantine ./nshift
+chmod +x ./nightlight
+xattr -d com.apple.quarantine ./nightlight
 
 # Actually change NightShift strength
-./nshift $strength</string>
+./nightlight $args</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -342,14 +412,35 @@ xattr -d com.apple.quarantine ./nshift
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>night on</string>
+				<key>subtext</key>
+				<string>Enable warm color spectrum</string>
+				<key>text</key>
+				<string>Turn Night Shift on</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>BA6F50E3-1A81-4138-A8FE-683D00A8A2E0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
 				<string></string>
 				<key>passthroughargument</key>
 				<false/>
 				<key>variables</key>
 				<dict>
-					<key>strength</key>
-					<string>off</string>
+					<key>args</key>
+					<string>on</string>
 				</dict>
 			</dict>
 			<key>type</key>
@@ -359,53 +450,11 @@ xattr -d com.apple.quarantine ./nshift
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>night on</string>
-				<key>subtext</key>
-				<string>Turns Night Shift on</string>
-				<key>text</key>
-				<string>Turn Night Shift on</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>ED209951-E811-4690-8562-D15480B080BE</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
-				<false/>
-				<key>variables</key>
-				<dict>
-					<key>strength</key>
-					<string>on</string>
-				</dict>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
-			<key>uid</key>
-			<string>B5EFA88D-8D1E-4731-918D-D0F770391E62</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
-	<string>Quickly toggle NightShift on/off or set the warm strength to a custom value between 0-100 or plainly turning on/off.
+	<string>Quickly turn NightShift on/off or set the color temperature to a custom value between 0-100.
 
-
-Uses nshift: https://github.com/leberwurstsaft/nshift</string>
+Uses nightlight: https://github.com/smudge/nightlight</string>
 	<key>uidata</key>
 	<dict>
 		<key>1856BA1E-8C67-4836-B011-01016F82716C</key>
@@ -413,7 +462,7 @@ Uses nshift: https://github.com/leberwurstsaft/nshift</string>
 			<key>xpos</key>
 			<integer>425</integer>
 			<key>ypos</key>
-			<integer>155</integer>
+			<integer>280</integer>
 		</dict>
 		<key>197AE1CD-8228-4A3B-9079-EDC2445102ED</key>
 		<dict>
@@ -422,9 +471,9 @@ Uses nshift: https://github.com/leberwurstsaft/nshift</string>
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>610</integer>
+			<integer>650</integer>
 			<key>ypos</key>
-			<integer>155</integer>
+			<integer>115</integer>
 		</dict>
 		<key>2D06ADA8-05E5-475A-94C3-2288BCB0BE2B</key>
 		<dict>
@@ -433,26 +482,40 @@ Uses nshift: https://github.com/leberwurstsaft/nshift</string>
 			<key>ypos</key>
 			<integer>45</integer>
 		</dict>
-		<key>66E147FF-EF1E-42BB-8F75-27C616797C58</key>
+		<key>8EFAE90E-D848-4B09-A515-58640594F92E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>25</integer>
+			<integer>425</integer>
 			<key>ypos</key>
-			<integer>155</integer>
+			<integer>15</integer>
 		</dict>
 		<key>8FD18644-7D42-48EB-B4C1-5C70FF96403D</key>
 		<dict>
 			<key>xpos</key>
 			<integer>220</integer>
 			<key>ypos</key>
-			<integer>185</integer>
+			<integer>380</integer>
 		</dict>
-		<key>B5EFA88D-8D1E-4731-918D-D0F770391E62</key>
+		<key>9B53390E-04D4-47CC-873E-7324D569372E</key>
 		<dict>
 			<key>xpos</key>
 			<integer>220</integer>
 			<key>ypos</key>
-			<integer>325</integer>
+			<integer>240</integer>
+		</dict>
+		<key>BA6F50E3-1A81-4138-A8FE-683D00A8A2E0</key>
+		<dict>
+			<key>xpos</key>
+			<integer>25</integer>
+			<key>ypos</key>
+			<integer>350</integer>
+		</dict>
+		<key>C3FF67E9-59C2-46F9-BB90-003A0EBE328E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>25</integer>
+			<key>ypos</key>
+			<integer>210</integer>
 		</dict>
 		<key>C5C4B0B0-CCF9-4632-AB68-AA8A67E519B9</key>
 		<dict>
@@ -461,16 +524,11 @@ Uses nshift: https://github.com/leberwurstsaft/nshift</string>
 			<key>ypos</key>
 			<integer>15</integer>
 		</dict>
-		<key>ED209951-E811-4690-8562-D15480B080BE</key>
-		<dict>
-			<key>xpos</key>
-			<integer>25</integer>
-			<key>ypos</key>
-			<integer>295</integer>
-		</dict>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>1.0.1</string>
+	<string>1.1.0</string>
 	<key>webaddress</key>
 	<string>www.shmulvad.com</string>
 </dict>
