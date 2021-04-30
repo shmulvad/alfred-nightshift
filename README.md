@@ -14,7 +14,7 @@ A simple [Alfred][1] workflow for quickly turning on/off Night Shift or setting 
 2. All further updates are handled automatically.
 
 ## Usage
-In Alfred, type `night` followed by either `on`, `off` or a number between `0 - 100`.
+In Alfred, type `night` followed by either `on`, `off` or a number between `0 - 100`. In the workflow, you can also set a custom hotkey for toggling.
 
 <p align="center">
   <img width="1200" height="auto" src="images/night.png?raw=true">
