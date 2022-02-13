@@ -22,6 +22,14 @@ In Alfred, type `night` followed by either `on`, `off` or a number between `0 - 
 </p>
 
 
+## Caveats
+
+Some users on Apple silicon chips have reported that the workflow didn't work out of the box. If the workflow is not working, you can try the following:
+
+1. Manually change permissions in settings to allow it.
+2. Install [Rosetta 2][5] if you don't already have it on your system.
+
+
 ## Credits
 The workflow makes use of the following:
 
@@ -32,3 +40,4 @@ The workflow makes use of the following:
 [2]: https://github.com/shmulvad/alfred-nightshift/releases/latest/download/NightShift.alfredworkflow
 [3]: https://github.com/smudge/nightlight
 [4]: https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater
+[5]: https://support.apple.com/en-us/HT211861
